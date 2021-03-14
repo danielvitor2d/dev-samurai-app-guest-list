@@ -1,3 +1,7 @@
-# APP Lista de Convidados
+# APP Guest List
 
-Repositório criado para o APP Lista de Convidados desenvolvido no curso JS Ninja da [DevSamurai](https://devsamurai.com.br/)
+Repository created for the APP Guest List developed in the JS Ninja course by [Dev Samurai](https://devsamurai.com.br/)
+
+## Description
+
+It's a simple program to add and remove guests using HTML + javascript, saved in browser's local storage.
