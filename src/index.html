@@ -2,49 +2,70 @@
 <html>
   <head>
     <title>Guest List</title>
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="app">
       <h1>Guest List</h1>
-      <ul id="guest_list"></ul>
-      <input id="guest_name" type="text" placeholder="Type the guest name..." />
-      <button id="guest_register" >Register</button>
+      <form>
+        <input id="guest_name" type="text" placeholder="Type the guest name..." />
+        <button id="guest_register">Register</button>
+        <ul id="guest_list"></ul>
+      </form>
     </div>
     <script type="text/javascript">
       // js code
       var guests = JSON.parse(localStorage.getItem('guests')) || [];
 
       var elList = document.getElementById('guest_list');
-      var elName = document.getElementById('guest_name');
+      var elField = document.getElementById('guest_name');
       var elButton = document.getElementById('guest_register');
 
-      listGuests();
+      var addGuests = function () {
+        var guestName = elField.value;
+        console.log("Tamanho: " + guestName.length);
+        if (guestName.length > 0) {
+          var find = -1;
+          for (var i = 0; i < guests.length; i++) {
+            var guest = guests[i];
+            if (guest.name === guestName) {
+              find = i;
+              break;
+            }
+          }
+          if (find == -1) {
+            guests.push({ name: guestName });
+            elField.value = "";
+            saveGuests();
+            listGuests();
+          } else {
+            alert("Repeated guests!");
+          }
+        } else {
+          alert("Guest's name can't be empty!");
+        }
+      }
 
-      elButton.onclick = function() {
-        var name = elName.value;
-        guests.push({ name: name });
-        elName.value = "";
-        saveGuests();
-        listGuests();
-      };
-
-      function saveGuests() {
+      var saveGuests = function() {
         localStorage.setItem('guests', JSON.stringify(guests));
       }
 
-      function listGuests() {
+      var listGuests = function() {
         elList.innerHTML = "";
         for (const guest of guests) {
           var elGuest = document.createElement('li');
-          var elGuestName = document.createTextNode(guest.name);
-          elGuest.appendChild(elGuestName);
+          var elClass = document.createAttribute('class');
+          elClass.value = 'guest';
+          elGuest.setAttributeNode(elClass);
+
+          var divLi = document.createElement('div');
 
           var elDelete = document.createElement('a');
+          var elDeleteName = document.createTextNode('Delete');
+
           elDelete.setAttribute("href", "#");
-
-          var elDeleteName = document.createTextNode('delete');
           elDelete.appendChild(elDeleteName);
-
           elDelete.onclick = () => {
             guests = guests.filter((item) => {
               return item.name != guest.name;
@@ -53,10 +74,26 @@
             listGuests();
           }
 
-          elGuest.appendChild(elDelete);
+          var elGuestName = document.createTextNode(guest.name);
+
+          divLi.appendChild(elGuestName);
+          divLi.appendChild(elDelete);
+
+          elGuest.appendChild(divLi);
+
           elList.appendChild(elGuest);
         }
       }
+
+      elButton.onclick = addGuests;
+
+      elField.onkeypress = (event) => {
+        if (event.keyCode == 0xd) {
+          addGuests;
+        }
+      }
+
+      listGuests();
     </script>
   </body>
 </html>

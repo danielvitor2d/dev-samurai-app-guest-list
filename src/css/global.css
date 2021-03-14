@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --background: #f2edd7;
+  --text: #393232;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+}
+
+body, input, button {
+  font: 400 16px "Inter", sans-serif;
+}
+
+button {
+  background-color: #3a6351;
+  border: none;
+  color: white;
+  padding: 0.5rem 0.5rem;
+  text-decoration: none;
+  margin: 0 auto;
+  cursor: pointer;
+}
+
+h1 {
+  margin: 0.5rem 1.5rem;
+  padding: 0.5rem 0.5rem;
+  color: #3a6351;
+}
+
+input {
+  margin: 0 auto;
+  padding: 0.5rem 0.5rem;
+}
+
+input[type=text]:focus {
+  border: 3px solid #555;
+}
+
+form {
+  margin: 0.5rem 2.5rem;
+}
+
+a {
+  margin: 0 auto;
+  padding: 0.5rem 0.5rem;
+  color: #e48257;
+  text-decoration: none;
+}
+
+.guest {
+  margin: 0 auto;
+  padding: 0.25rem 0.5rem;
+}
